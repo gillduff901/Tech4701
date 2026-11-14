@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Use — a game for writing your Philosophy of Use</title>
+<style>
+  :root{
+    --paper:#f4eee2; --paper-2:#eae1cf; --white:#fffdf8;
+    --ink:#1d1a16; --ink-2:#5a5446; --rule:#d3c8b1;
+    --wax:#b3261e; --wax-2:#7f1811;
+    --amber:#ffb454; --amber-2:#d98a2b; --machine:#15130f; --machine-2:#28231b;
+    --ok:#2f6b4f; --warn:#a85a00;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:17px;
+       background-image:radial-gradient(ellipse at top,rgba(255,255,255,.55),rgba(255,255,255,0) 60%)}
+  a{color:var(--wax-2)}
+  .hidden{display:none !important}
+  .sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+  /* Masthead */
+  .masthead{max-width:900px;margin:0 auto;padding:22px 20px 10px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-family:var(--serif);font-weight:700;letter-spacing:.22em;font-size:14px;text-transform:uppercase}
+  .brand small{display:block;letter-spacing:.04em;text-transform:none;font-weight:400;color:var(--ink-2);font-size:13px;font-style:italic}
+  .seals{display:flex;gap:8px;align-items:center}
+  .seal{width:44px;height:44px;border:none;background:transparent;padding:0;color:var(--rule);cursor:default;transition:color .3s,transform .3s}
+  .seal svg{width:100%;height:100%;display:block}
+  .seal.is-reachable{color:var(--ink-2);cursor:pointer}
+  .seal.is-active{color:var(--ink)}
+  .seal.is-done{color:var(--wax);transform:rotate(-8deg)}
+  .seal.is-done.just{animation:stamp .55s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes stamp{0%{transform:scale(2.2) rotate(-20deg);opacity:0}60%{transform:scale(.92) rotate(-8deg);opacity:1}100%{transform:scale(1) rotate(-8deg)}}
+
+  main{max-width:900px;margin:0 auto;padding:10px 20px 60px}
+  .screen{display:none}
+  .screen.is-active{display:block;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--wax);margin:28px 0 6px}
+  h1{font-family:var(--serif);font-size:clamp(44px,8vw,88px);line-height:.95;margin:0 0 14px;letter-spacing:-.01em}
+  h1 .strike{position:relative;display:inline-block}
+  h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:.09em;background:var(--wax);transform:rotate(-2deg)}
+  h2{font-family:var(--serif);font-size:clamp(32px,5vw,48px);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em}
+  h3{font-family:var(--serif);font-size:24px;margin:28px 0 8px}
+  .q{font-family:var(--serif);font-style:italic;font-size:21px;color:var(--ink-2);margin:0 0 20px;border-bottom:1px solid var(--rule);padding-bottom:14px}
+  p{margin:0 0 14px;max-width:68ch}
+  .lede{font-size:19px}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
+
+  /* Buttons */
+  .btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--paper);font:600 15px var(--sans);padding:11px 18px;border-radius:4px;cursor:pointer;transition:transform .08s,background .2s}
+  .btn:hover{background:#000}
+  .btn:active{transform:translateY(1px)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn-wax{background:var(--wax);border-color:var(--wax)}
+  .btn-wax:hover{background:var(--wax-2)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--paper-2)}
+  .btn-sm{padding:7px 12px;font-size:13.5px}
+  .btn:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0}
+
+  /* Choice buttons */
+  .choice{appearance:none;border:1.5px solid var(--ink);background:var(--white);color:var(--ink);font:15px var(--sans);padding:9px 14px;border-radius:4px;cursor:pointer;text-align:left;transition:background .15s}
+  .choice:hover{background:var(--paper-2)}
+  .choice.is-on{background:var(--ink);color:var(--paper)}
+
+  /* Fields */
+  label.lab{display:block;font-family:var(--serif);font-size:19px;margin:22px 0 8px}
+  input[type=text],textarea{width:100%;border:1.5px solid var(--ink);background:var(--white);padding:12px 14px;font:17px var(--sans);border-radius:4px;color:var(--ink)}
+  textarea.voice{font-family:var(--serif);font-style:italic;font-size:19px;min-height:120px;resize:vertical;line-height:1.45}
+  .hint{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);margin-top:6px}
+  .hint.err{color:var(--wax)}
+  .shake{animation:shake .4s}
+  @keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+  /* Machine panel */
+  .machine{background:var(--machine);color:var(--amber);font-family:var(--mono);font-size:14.5px;line-height:1.55;padding:18px 20px 18px;border-radius:4px;margin:22px 0;position:relative;border-left:4px solid var(--amber-2);white-space:pre-wrap}
+  .machine::before{content:"MACHINE READING · heuristics crude on purpose";display:block;font-size:11px;letter-spacing:.16em;color:var(--amber-2);margin-bottom:10px}
+  .machine .cur{display:inline-block;width:.6em;height:1.05em;background:var(--amber);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* Writer's note */
+  .note{border-left:3px solid var(--wax);padding:4px 0 4px 18px;margin:26px 0;font-family:var(--serif);font-size:18px;max-width:70ch}
+  .note::before{content:"For the writer";display:block;font:600 11.5px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--wax);margin-bottom:6px}
+  .course{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);background:var(--paper-2);padding:8px 12px;border-radius:3px;display:inline-block;margin:0 0 18px}
+
+  /* Contents table */
+  .toc{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:26px 0;padding:6px 0}
+  .toc div{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .toc div:last-child{border-bottom:none}
+  .toc b{font-family:var(--serif);font-size:20px}
+  .toc span{font-family:var(--serif);font-style:italic;color:var(--ink-2)}
+  @media (max-width:560px){.toc div{grid-template-columns:1fr;gap:2px}}
+
+  /* Belt */
+  .belt{overflow:hidden;position:relative;margin:22px -20px;padding:26px 0 30px;
+        background:repeating-linear-gradient(90deg,#2b2620 0 44px,#211d18 44px 88px);
+        box-shadow:inset 0 10px 18px rgba(0,0,0,.35),inset 0 -10px 18px rgba(0,0,0,.35)}
+  .belt::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:repeating-linear-gradient(90deg,#fbbf24 0 20px,#1d1a16 20px 40px);opacity:.85}
+  .belt-track{display:flex;gap:18px;width:max-content;padding:0 18px;animation:roll 75s linear infinite;will-change:transform}
+  .belt:hover .belt-track,.belt:focus-within .belt-track,.belt.is-stopped .belt-track{animation-play-state:paused}
+  @keyframes roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .bag{position:relative;width:208px;flex:0 0 auto;background:var(--paper);border:2px solid var(--ink);border-radius:12px 12px 7px 7px;padding:18px 14px 14px;cursor:pointer;text-align:left;font-family:var(--sans);color:var(--ink);transition:transform .15s,background .2s,color .2s;margin-top:10px}
+  .bag::before{content:"";position:absolute;left:50%;top:-12px;transform:translateX(-50%);width:62px;height:16px;border:2px solid var(--ink);border-bottom:none;border-radius:10px 10px 0 0;background:var(--paper)}
+  .bag:hover{transform:translateY(-4px)}
+  .bag b{display:block;font-family:var(--serif);font-size:22px;margin-bottom:4px}
+  .bag i{display:block;font-size:14px;line-height:1.35;color:var(--ink-2)}
+  .bag .tag{position:absolute;right:-6px;top:10px;background:var(--wax);color:#fff;font:700 10.5px var(--mono);letter-spacing:.14em;padding:3px 8px;transform:rotate(6deg);display:none}
+  .bag.is-claimed{background:var(--ink);color:var(--paper)}
+  .bag.is-claimed::before{background:var(--ink)}
+  .bag.is-claimed i{color:#cbc3b3}
+  .bag.is-claimed .tag{display:block}
+  .bag.is-full:not(.is-claimed){opacity:.45;cursor:not-allowed}
+  .belt-controls{display:flex;gap:14px;align-items:center;margin:-8px 0 16px}
+  .rack{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px 0 24px}
+  .slot{border:2px dashed var(--rule);border-radius:6px;min-height:64px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;color:var(--rule)}
+  .slot.is-filled{border-style:solid;border-color:var(--ink);color:var(--ink);background:var(--white)}
+  @media (max-width:560px){.rack{grid-template-columns:1fr}}
+  .voices{list-style:none;padding:0;margin:0 0 6px}
+  .voices li{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .voices b{font-family:var(--serif);font-size:19px}
+  .voices span{font-family:var(--serif);font-style:italic;font-size:19px}
+  @media (max-width:560px){.voices li{grid-template-columns:1fr;gap:2px}}
+
+  /* Confidence cards */
+  .out{background:var(--white);border:1.5px solid var(--ink);border-radius:5px;margin:18px 0;overflow:hidden}
+  .out-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 14px;background:var(--machine);color:var(--amber);font-family:var(--mono);font-size:12px;letter-spacing:.1em}
+  .conf{display:flex;align-items:center;gap:8px}
+  .conf .bar{width:120px;height:8px;background:#3a3329;border-radius:2px;overflow:hidden}
+  .conf .bar i{display:block;height:100%;width:100%;background:var(--amber)}
+  .out-body{padding:16px 16px 6px;font-family:var(--mono);font-size:14.5px;line-height:1.5;white-space:pre-wrap;color:#2a251e}
+  .out-choices{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px 16px}
+  .verdict{padding:14px 16px;border-top:1px dashed var(--rule);font-family:var(--serif);font-size:17px;display:none}
+  .verdict b{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .verdict.v-sharp b{color:var(--ok)} .verdict.v-honest b{color:var(--ok)} .verdict.v-soft b{color:var(--warn)} .verdict.v-swallowed b{color:var(--wax)}
+  .out.is-revealed .verdict{display:block}
+  .meters{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+  .meter{background:var(--white);border:1.5px solid var(--ink);border-radius:5px;padding:14px}
+  .meter b{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:8px}
+  .meter .bar{height:14px;background:var(--paper-2);border-radius:3px;overflow:hidden}
+  .meter .bar i{display:block;height:100%;background:var(--amber);width:0;transition:width 1.2s ease}
+  .meter.you .bar i{background:var(--ink)}
+  .meter small{display:block;font-family:var(--serif);font-style:italic;margin-top:8px;color:var(--ink-2)}
+  @media (max-width:560px){.meters{grid-template-columns:1fr}}
+
+  /* Chat */
+  .chat{background:var(--white);border:1.5px solid var(--ink);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .chat-head{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);text-align:center;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+  .msg{max-width:78%;padding:10px 14px;border-radius:16px;font-size:16px;line-height:1.4;animation:pop .25s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}
+  .msg.them{align-self:flex-start;background:#e9e3d6;border-bottom-left-radius:4px}
+  .msg.me{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:4px}
+  .msg.note{align-self:stretch;max-width:none;background:transparent;border-top:1px dashed var(--rule);border-radius:0;padding:10px 4px 2px;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--ink-2)}
+  .msg.note::before{content:"what this implies — ";font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--wax);font-style:normal}
+  .typing{align-self:flex-start;background:#e9e3d6;border-radius:16px;padding:12px 16px;display:flex;gap:5px}
+  .typing i{width:7px;height:7px;background:#7a7262;border-radius:50%;animation:dot 1.1s infinite}
+  .typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+  @keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+  .replies{display:flex;flex-direction:column;gap:8px;margin:4px 0 0}
+  .replies .choice{border-radius:16px;border-bottom-right-radius:4px;align-self:flex-end;max-width:78%}
+  .face{background:var(--white);border:1.5px solid var(--ink);border-radius:5px;padding:16px;margin:18px 0}
+  .face .opt{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+  .face .opt:last-of-type{border-bottom:none}
+  .face input{margin-top:6px}
+
+  /* Dial */
+  .task{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:center;background:var(--white);border:1.5px solid var(--ink);border-radius:5px;padding:14px 16px;margin:10px 0}
+  .task .t{font-family:var(--serif);font-size:19px}
+  .task .t small{display:block;font:12px var(--mono);color:var(--ink-2);letter-spacing:.1em;margin-bottom:2px}
+  .dial{display:flex;flex-direction:column;gap:4px}
+  .dial input[type=range]{width:100%;accent-color:var(--wax);cursor:pointer}
+  .dial .lvl{font-family:var(--mono);font-size:13px;color:var(--ink-2);display:flex;justify-content:space-between}
+  .dial .lvl b{color:var(--ink);font-weight:600}
+  .dial.is-unset .lvl b{color:var(--wax)}
+  .task.is-flagged{border-color:var(--wax);box-shadow:0 0 0 3px rgba(179,38,30,.12)}
+  .task .flag{grid-column:1/-1;font-family:var(--serif);font-style:italic;color:var(--wax-2);font-size:16px;display:none;border-top:1px dashed var(--rule);padding-top:8px}
+  .task.is-flagged .flag{display:block}
+  @media (max-width:600px){.task{grid-template-columns:1fr}}
+  .scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:.06em;margin:12px 0 2px;gap:6px}
+  .scale span{flex:1;text-align:center}
+  @media (max-width:600px){.scale{display:none}}
+
+  /* Care layers */
+  .room{position:relative;margin:18px 0;min-height:60px}
+  .layer{background:var(--white);border:1.5px solid var(--ink);border-radius:5px;padding:16px 18px;margin:0 0 12px;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+  .layer.is-in{opacity:1;transform:none}
+  .layer b{font-family:var(--serif);font-size:22px;display:block;margin-bottom:4px}
+  .layer p{font-size:16.5px;margin-bottom:12px}
+  .layer .row{margin:0}
+  .layer.is-bound{border-color:var(--wax);box-shadow:0 0 0 3px rgba(179,38,30,.12)}
+  .layer.is-free{opacity:.7}
+  .layer .stamp-txt{font:700 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--wax);display:none;margin-top:8px}
+  .layer.is-bound .stamp-txt,.layer.is-free .stamp-txt{display:block}
+  .layer.is-free .stamp-txt{color:var(--ink-2)}
+
+  /* Terms doc */
+  .doc{background:var(--white);border:1px solid var(--rule);box-shadow:0 12px 30px rgba(0,0,0,.08);padding:36px 38px;margin:20px 0;font-family:var(--serif);position:relative;overflow:hidden}
+  .doc h3{margin:0 0 4px;font-size:30px;letter-spacing:.14em;text-transform:uppercase}
+  .doc .ver{font:12px var(--mono);color:var(--ink-2);letter-spacing:.1em;margin-bottom:22px}
+  .doc .cl{margin:0 0 20px;font-size:18px;line-height:1.5}
+  .doc .cl b{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;display:block;color:var(--wax);margin-bottom:3px}
+  .doc .cl i{color:var(--ink)}
+  .doc .cl .m{font-family:var(--mono);font-size:13px;color:var(--ink-2);display:block;margin-top:4px}
+  .doc .draft{position:absolute;right:-26px;top:22px;transform:rotate(14deg);border:3px solid var(--wax);color:var(--wax);font:700 14px var(--mono);letter-spacing:.2em;padding:6px 36px;opacity:.85}
+  .doc .fl{background:#fde8e6;border-bottom:2px solid var(--wax);padding:0 2px}
+  .doc .mw{background:#fff1d6;border-bottom:2px solid var(--amber-2);padding:0 2px}
+  @media (max-width:560px){.doc{padding:26px 18px}}
+  .detector{background:var(--white);border:1.5px solid var(--ink);border-radius:5px;padding:16px 18px;margin:14px 0}
+  .detector b.h{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:8px}
+  .detector p{font-size:16px}
+  .breaks label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--rule);font-family:var(--serif);font-size:17px;cursor:pointer}
+  .breaks label:last-of-type{border-bottom:none}
+  .breaks input{margin-top:6px}
+  .plain{display:none;margin-top:12px}
+  .plain.is-open{display:block}
+  .plain textarea{font-family:var(--mono);font-size:13px;min-height:260px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);font:14px var(--mono);padding:10px 16px;border-radius:4px;opacity:0;transition:.25s;pointer-events:none}
+  .toast.is-on{opacity:1;transform:translateX(-50%)}
+
+  /* Stamp overlay */
+  .stamp-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:50;opacity:0}
+  .stamp-overlay.is-on{opacity:1}
+  .stamp-overlay .big{width:min(60vw,320px);color:var(--wax);animation:stampBig .8s cubic-bezier(.2,1.3,.4,1) forwards}
+  @keyframes stampBig{0%{transform:scale(3) rotate(-25deg);opacity:0}50%{transform:scale(.95) rotate(-10deg);opacity:1}100%{transform:scale(1) rotate(-10deg);opacity:1}}
+
+  footer{max-width:900px;margin:0 auto;padding:10px 20px 40px;font-family:var(--mono);font-size:12px;color:var(--ink-2);border-top:1px solid var(--rule)}
+
+  @media (prefers-reduced-motion:reduce){
+    .belt-track{animation:none}
+    .screen.is-active,.msg,.seal.is-done.just,.stamp-overlay .big{animation:none}
+    .layer{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">Terms of Use<small>A game for writing your Philosophy of Use</small></div>
+  <nav class="seals" id="seals" aria-label="Clauses sealed"></nav>
+</header>
+
+<main id="app">
+
+<!-- ================= INTRO ================= -->
+<section id="s-intro" class="screen is-active">
+  <p class="kicker">Before you click "I agree"</p>
+  <h1><span class="strike">Terms of Use</span><br>Terms of <em>my</em> use.</h1>
+  <p class="lede">You have agreed to a few hundred Terms of Use in your life. You read none of them. Each one was written by someone else, about a tool, to protect the people who made the tool.</p>
+  <p class="lede">A Philosophy of Use is the reverse. You write it. It's about you. It protects what you care about. And unlike the fine print, it only counts if you could actually break it.</p>
+  <p>This course has asked you to think two ways at once: <strong>rhetorically</strong> (what human situation does this output have to enter?) and <strong>computationally</strong> (what system behavior does my prompt shape?). A Philosophy of Use is where those two habits turn around and look at you. The situation is your career. The system is you.</p>
+
+  <div class="toc" aria-label="The five things a Philosophy of Use has to do">
+    <div><b>§I Orient</b><span>What values and intellectual commitments do I bring to AI?</span></div>
+    <div><b>§II Discern</b><span>How do I recognize uncertainty, error, and the limits of my own understanding?</span></div>
+    <div><b>§III Relate</b><span>How should AI affect my relationships and collaborations?</span></div>
+    <div><b>§IV Value</b><span>What is the significance of expertise, experience, and human judgment?</span></div>
+    <div><b>§V Care</b><span>What responsibilities and obligations constrain my choices?</span></div>
+  </div>
+
+  <p>Five clauses, five short games, about fifteen minutes. Each clause ends with one sentence in your own words and a wax seal. At the end, a machine assembles your sentences into a first draft and tells you what it thinks of you. Its reading will be crude. That's the point: your Philosophy of Use is what you write in the gap between the machine's reading and what you actually mean.</p>
+  <p class="meta">There is no score. There is a draft. Nothing you type leaves this page.</p>
+
+  <label class="lab" for="fField">What do you do, or what are you training to do?</label>
+  <input type="text" id="fField" placeholder="e.g., nursing, civil engineering, marketing, teaching, data analysis" autocomplete="off">
+  <label class="lab" for="fName">What should the document call you?</label>
+  <input type="text" id="fName" placeholder="a name, a handle, or leave it blank" autocomplete="off">
+
+  <div class="row">
+    <button class="btn btn-wax" id="btnStart">Begin at the baggage claim →</button>
+    <button class="btn btn-ghost hidden" id="btnResume">Resume where I left off</button>
+  </div>
+</section>
+
+<!-- ================= I ORIENT ================= -->
+<section id="s-orient" class="screen">
+  <p class="kicker">Clause I · Orient</p>
+  <h2>The Baggage Claim</h2>
+  <p class="q">What values and intellectual commitments do I bring to AI?</p>
+  <p>Nobody arrives at a tool empty-handed. You bring values you learned long before you typed a prompt: from your family, your field, the teacher who marked you down, the job where you got it wrong. The belt is running. <strong>Claim three.</strong> Click a bag to claim it; click again to put it back.</p>
+
+  <div class="belt" id="belt" aria-label="Conveyor belt of values">
+    <div class="belt-track" id="beltTrack"></div>
+  </div>
+  <div class="belt-controls">
+    <button class="btn btn-ghost btn-sm" id="beltStop" aria-pressed="false">Stop the belt</button>
+    <span class="meta" id="claimCount">0 of 3 claimed</span>
+  </div>
+  <div class="rack" id="rack" aria-live="polite"></div>
+
+  <div id="crunch" class="hidden">
+    <h3>4:20 p.m.</h3>
+    <p>Something is due at 5:00. The model's draft is&hellip; fine. Here's what you packed, and what each bag says right now:</p>
+    <ul class="voices" id="crunchVoices"></ul>
+    <div class="machine" id="orientReading"></div>
+    <label class="lab" for="orientText">Two of these can't both win at 4:40. Which one does, and what does it cost you?</label>
+    <textarea id="orientText" class="voice" placeholder="When it's tight, ___ beats ___, because…"></textarea>
+    <div class="hint" id="orientHint">One honest sentence. Finish the blank if it helps.</div>
+    <aside class="note">The Orient clause is not a list of virtues. Anyone can claim craft <em>and</em> speed <em>and</em> rigor. Your philosophy is the ranking: which one you drop when the clock is on you, and whether you're willing to say so in writing.</aside>
+    <div class="row"><button class="btn btn-wax seal-btn" data-seal="1" data-next="s-discern" data-text="orientText">Seal §I and continue →</button></div>
+  </div>
+</section>
+
+<!-- ================= II DISCERN ================= -->
+<section id="s-discern" class="screen">
+  <p class="kicker">Clause II · Discern</p>
+  <h2>The Confidence Meter</h2>
+  <p class="q">How do I recognize uncertainty, error, and the limits of my own understanding?</p>
+  <p>Five outputs. Every one of them arrived with the same confidence, because the model doesn't do nervous. Your job is <em>not</em> to spot the error. Your job is to know whether you <em>could</em>. For each one, pick the honest answer, not the clever one.</p>
+  <span class="course" data-course="m4"></span>
+  <div id="outputs"></div>
+  <div class="row"><button class="btn" id="btnReveal" disabled>Run the autopsy</button><span class="meta" id="discernCount">0 of 5 answered</span></div>
+
+  <div id="discernResult" class="hidden">
+    <div class="meters">
+      <div class="meter"><b>Model confidence, all five</b><div class="bar"><i id="mConf"></i></div><small>It was 100% every time. It is always 100%.</small></div>
+      <div class="meter you"><b>What you swallowed</b><div class="bar"><i id="mYou"></i></div><small id="mYouTxt"></small></div>
+    </div>
+    <div class="machine" id="discernReading"></div>
+    <label class="lab" for="discernText">Name one kind of claim you can check cold, and one kind you can't. Where's the edge for you?</label>
+    <textarea id="discernText" class="voice" placeholder="I can usually tell when ___. I can't tell when ___, so at that edge I…"></textarea>
+    <div class="hint" id="discernHint">Be specific to your field. "I'll fact-check everything" is not a sentence anyone has ever lived by.</div>
+    <aside class="note">The Discern clause is not a promise to verify everything; you won't. It's a map of the edge of your own competence, and a rule for what you do when an output lands past that edge. The feeling of rightness is identical on both sides of the line. Only the checking differs.</aside>
+    <div class="row"><button class="btn btn-wax seal-btn" data-seal="2" data-next="s-relate" data-text="discernText">Seal §II and continue →</button></div>
+  </div>
+</section>
+
+<!-- ================= III RELATE ================= -->
+<section id="s-relate" class="screen">
+  <p class="kicker">Clause III · Relate</p>
+  <h2>The Group Chat</h2>
+  <p class="q">How should AI affect my relationships and collaborations?</p>
+  <p>AI doesn't enter your life alone. It enters your group project, your team, your inbox. Here's a chat with a teammate. Reply as the person you are on a Tuesday night, not the one you'd like to be.</p>
+  <div class="chat" id="chat" aria-live="polite">
+    <div class="chat-head">Taylor · project partner</div>
+  </div>
+
+  <div id="faceCheck" class="hidden">
+    <h3>Say it to their face</h3>
+    <div class="face">
+      <p>Pick one of the three replies you sent. Would you say it out loud, in person, to someone whose opinion of you matters?</p>
+      <div id="faceOpts"></div>
+      <div class="row" style="margin-bottom:0">
+        <button class="choice" data-face="yes">Yes, word for word</button>
+        <button class="choice" data-face="no">No. I'd soften it or skip it</button>
+      </div>
+    </div>
+    <div class="machine" id="relateReading"></div>
+    <label class="lab" for="relateText">Write the rule you were actually following: who gets told, who gets asked, who gets the credit.</label>
+    <textarea id="relateText" class="voice" placeholder="When other people's work is in the loop, I…"></textarea>
+    <div class="hint" id="relateHint">A rule, not a vibe. Someone should be able to catch you breaking it.</div>
+    <aside class="note">The Relate clause is about other people's work and other people's trust. It has to answer three questions your teammates will otherwise answer for you: who gets told that AI was used, who gets asked before their work is touched, and whose name goes on the result.</aside>
+    <div class="row"><button class="btn btn-wax seal-btn" data-seal="3" data-next="s-value" data-text="relateText">Seal §III and continue →</button></div>
+  </div>
+</section>
+
+<!-- ================= IV VALUE ================= -->
+<section id="s-value" class="screen">
+  <p class="kicker">Clause IV · Value</p>
+  <h2>The Delegation Dial</h2>
+  <p class="q">What is the significance of expertise, experience, and human judgment?</p>
+  <p>You audited autonomy for an agent. Now audit it for yourself. Seven tasks. Set each dial from <em>I do it</em> to <em>AI does it and I don't look</em>. Be honest about an ordinary week, not your best day.</p>
+  <span class="course" data-course="m5"></span>
+  <div class="scale"><span>I do it</span><span>AI suggests, I write</span><span>AI drafts, I edit</span><span>AI does, I check</span><span>AI does, I don't look</span></div>
+  <div id="tasks"></div>
+  <div class="row"><button class="btn" id="btnDial" disabled>Read the dials</button><span class="meta" id="dialCount">0 of 7 set</span></div>
+
+  <div id="valueResult" class="hidden">
+    <div class="machine" id="valueReading"></div>
+    <label class="lab" for="valueText">Name the one thing you won't hand over, and what about your experience makes you the right one to keep it.</label>
+    <textarea id="valueText" class="voice" placeholder="I keep ___, because I've seen what happens when…"></textarea>
+    <div class="hint" id="valueHint">"Humans are still important" is a platitude. Say what your judgment is <em>for</em>, in your work.</div>
+    <aside class="note">The Value clause says what human judgment is for in <em>your</em> work, not in general. The strongest version names a task, names the experience that qualifies you, and names what the tool can't see from inside the prompt. Expertise is the thing you're supposed to be accumulating; the clause says how you'll keep accumulating it with a very fast draft always on offer.</aside>
+    <div class="row"><button class="btn btn-wax seal-btn" data-seal="4" data-next="s-care" data-text="valueText">Seal §IV and continue →</button></div>
+  </div>
+</section>
+
+<!-- ================= V CARE ================= -->
+<section id="s-care" class="screen">
+  <p class="kicker">Clause V · Care</p>
+  <h2>Who Else Is in the Room</h2>
+  <p class="q">What responsibilities and obligations constrain my choices?</p>
+  <p>You pasted something into a chatbot. It was a normal Tuesday. The chat window looked private: you, the cursor, the box. Let's see who was actually in the room. For each one, decide: does this person bind you, or not?</p>
+  <div class="room" id="room"></div>
+  <div class="row"><button class="btn btn-ghost" id="btnLayer">There's someone else here →</button></div>
+
+  <div id="careResult" class="hidden">
+    <div class="machine" id="careReading"></div>
+    <label class="lab" for="careText">Of those who bind you: name the obligation you'd keep even if no one could ever check. Write it as a rule you could break.</label>
+    <textarea id="careText" class="voice" placeholder="Even when no one would know, I don't…"></textarea>
+    <div class="hint" id="careHint">A constraint that costs you nothing isn't a constraint.</div>
+    <aside class="note">The Care clause is the only one with teeth. It names what you owe and to whom, and it's only convincing if keeping it sometimes costs you something: time, a grade, a shortcut, a client who wanted magic. The test is the empty room. What do you still do there?</aside>
+    <div class="row"><button class="btn btn-wax seal-btn" data-seal="5" data-next="s-terms" data-text="careText">Seal §V and read your terms →</button></div>
+  </div>
+</section>
+
+<!-- ================= TERMS ================= -->
+<section id="s-terms" class="screen">
+  <p class="kicker">Draft 0.1 · machine-assembled, human-owned</p>
+  <h2>Your Terms</h2>
+  <p>Here is what a machine made of what you said. It stitched your five sentences together, ran two crude checks over them, and formed an opinion. Read it the way you'd read any output: as the first draft of something you haven't written yet.</p>
+
+  <div class="doc" id="doc"></div>
+
+  <div class="detector" id="detPlatitude"></div>
+  <div class="detector" id="detMind"></div>
+  <div class="detector">
+    <b class="h">The breakability test</b>
+    <p>A philosophy is only a philosophy if you could violate it. For each clause: can you picture an ordinary day on which you'd break it?</p>
+    <div class="breaks" id="breaks"></div>
+    <p class="hint" id="breakTxt" style="margin-top:10px"></p>
+  </div>
+
+  <aside class="note">You now have five sentences, three crude readings, and a list of what the machine flagged. None of it is your Philosophy of Use. The document you'll write is longer, in your voice, and answers the five questions in an order that makes sense for <em>your</em> field. Use this draft the way the course has taught you to use any output: keep what survives your reading, repair what doesn't, and be able to say which is which.</aside>
+
+  <div class="row">
+    <button class="btn" id="btnCopy">Copy the draft</button>
+    <button class="btn btn-ghost" id="btnPlain">Show as plain text</button>
+    <button class="btn btn-ghost" id="btnRestart">Start over</button>
+  </div>
+  <div class="plain" id="plain"><textarea id="plainTxt" readonly aria-label="Plain text draft"></textarea><div class="hint">Select all and copy. Paste it into your journal or wherever your dossier lives.</div></div>
+</section>
+
+</main>
+
+<footer>Terms of Use · a game for the Philosophy of Use assignment · <span data-course="name"></span>. Nothing typed here is stored anywhere but this browser.</footer>
+
+<div class="stamp-overlay" id="stampOverlay" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Instructor config: edit these strings freely ---------- */
+const COURSE = {
+  name: 'TECH 4701/6701 · Applied AI Tools and Prompt Engineering',
+  m4:   'You did this already, once, in Module 4: the Output Autopsy. Same instrument, turned on yourself.',
+  m5:   'Same dial as the Module 5 Autonomy Audit. The agent this time is you.'
+};
+
+/* ---------- Data ---------- */
+const VALUES = [
+  {id:'craft',        name:'Craft',        gloss:'What I make should be good, not just done.',             crunch:'"Fine isn’t good. Open it back up."'},
+  {id:'speed',        name:'Speed',        gloss:'Done on time beats perfect late.',                        crunch:'"Fine ships. Hit send."'},
+  {id:'curiosity',    name:'Curiosity',    gloss:'I want to know how the thing works.',                     crunch:'"Wait — why did it write it that way?"'},
+  {id:'authorship',   name:'Authorship',   gloss:'My name on it means I made it.',                          crunch:'"If I send this, is it mine?"'},
+  {id:'rigor',        name:'Rigor',        gloss:'Claims get checked before they travel.',                  crunch:'"Three of those numbers are unverified."'},
+  {id:'access',       name:'Access',       gloss:'Tools should widen who gets to do this work.',            crunch:'"Without the draft I’d have missed the deadline entirely."'},
+  {id:'standards',    name:'Standards',    gloss:'My field has rules, and I keep them.',                    crunch:'"Would a licensed professional sign this?"'},
+  {id:'candor',       name:'Candor',       gloss:'People should know how the work was made.',               crunch:'"Nobody asked. Do I say anyway?"'},
+  {id:'thrift',       name:'Thrift',       gloss:'Don’t spend effort where it isn’t needed.',       crunch:'"It’s a routine memo. Move on."'},
+  {id:'independence', name:'Independence', gloss:'I should still be able to do this without the tool.',    crunch:'"Could I have written this myself? Do I still know how?"'}
+];
+const POLES = {makers:['craft','rigor','authorship','standards','independence'], finishers:['speed','thrift','access'], askers:['curiosity','candor']};
+
+const OUTPUTS = [
+  {label:'Budget note',
+   text:'Your team’s Q3 spend was $48,200 across the quarter’s four months, an average of $14,050 per month. This is within the approved range.',
+   verdicts:{
+     wrong:['sharp','Two tells, both inside the text: a quarter has three months, and $48,200 ÷ 4 isn’t $14,050 (÷ 3 isn’t either). You didn’t need to know anything about the team. You needed to read slowly.'],
+     cant:['soft','You could have told. It was in the text: a four-month quarter, and arithmetic that doesn’t work. Cheap errors are the ones you’re most tempted to skip, because checking them feels beneath you.'],
+     right:['swallowed','A quarter has three months, and $48,200 ÷ 4 isn’t $14,050. Nothing here required expertise. It required reading slowly, and the tone of the sentence ("within the approved range") made slow reading feel unnecessary.']
+   }},
+  {label:'Research claim',
+   text:'According to a 2019 study in the Journal of Applied Workforce Analytics (vol. 14, pp. 211–230), 62% of mid-career professionals now use automated drafting tools at least weekly.',
+   verdicts:{
+     cant:['honest','Nothing in this text can be verified from this text. The volume, the page range, the 62%: specificity is doing the persuading, and specificity is not evidence. "I can’t tell from here" is the correct reading, followed by a search. (We’re not saying whether the journal exists. Go look.)'],
+     wrong:['soft','Suspicious, and fair. But you don’t know it’s wrong, either; you’ve just flipped the sign on the same guess. The honest move is "can’t tell," then a search. Reflexive distrust feels like discernment and isn’t.'],
+     right:['swallowed','What convinced you? The volume number. The page range. The 62%. None of it can be checked from here, and all of it is the kind of detail a model produces fluently whether or not the study exists. Specificity is not evidence.']
+   }},
+  {label:'Code',
+   text:'This regular expression validates any email address:\n\n^[\\w.+-]+@[\\w-]+\\.[\\w.]+$',
+   verdicts:{
+     cant:['honest','If you don’t read regex, you can’t evaluate the pattern, and that is the correct thing to know about yourself. There was still a tell for non-readers: "any email address." No short pattern does that. Sometimes the scope of the claim is the error, not the content.'],
+     wrong:['sharp','Right, and the tell was available even if you don’t read regex: "any email address." No short pattern validates every valid address. The scope of a claim can be wrong even when you can’t evaluate its content.'],
+     right:['swallowed','Can you read regex? If not, "looks right" meant "looks like code." And even for readers: "any email address" is an overclaim no short pattern can keep. The error was in the scope of the claim, where you didn’t need to be an expert to see it.']
+   }},
+  {label:'Etymology',
+   text:'The word "philosophy" comes from Greek roots meaning "love of wisdom."',
+   verdicts:{
+     right:['fine','This one is right. Notice, though, that it felt right for the same reason the research claim did: it sounded like something you’ve heard. The feeling was identical. The difference is this one takes ten seconds to check, and you probably didn’t.'],
+     cant:['honest','Fair, and checkable in ten seconds: philo- (love) plus sophia (wisdom). The point isn’t that you should have known. It’s that "feels familiar" and "is true" are different states, and the only bridge between them is the ten seconds.'],
+     wrong:['soft','It’s correct: philo- (love) plus sophia (wisdom). Suspicion isn’t discernment any more than trust is. The question was never "do I believe it" but "could I check it," and this one you could, in ten seconds.']
+   }},
+  {label:'Summary',
+   text:'Summary of the attached 60-page policy document: the policy permits AI-assisted drafting for internal documents but requires written disclosure in all client-facing deliverables. No other restrictions apply.',
+   verdicts:{
+     cant:['honest','You cannot evaluate a summary of a document you haven’t read. That isn’t a weakness; it’s the definition of the situation. "No other restrictions apply" is the kind of sentence a model produces when it has run out of things to say. The question for your philosophy: what do you do when the thing you’d need to check is the thing you used the tool to avoid reading?'],
+     wrong:['soft','You can’t know it’s wrong. Same problem as "looks right," sign flipped. What you can know is that "no other restrictions apply" is unverifiable from here and that 60 pages rarely reduce to one clean sentence. The honest answer is "can’t tell," and then a decision about whether to open the document.'],
+     right:['swallowed','You accepted a summary of a document you haven’t read. Everyone does. "No other restrictions apply" is the tell: it’s the sentence that closes the question so you won’t open the file. The thing you’d need to check is the thing you used the tool to avoid reading.']
+   }}
+];
+const CHOICE_LABELS = {right:'Looks right', wrong:'Looks wrong', cant:'I can’t tell from here'};
+const VERDICT_LABELS = {sharp:'Sharp', honest:'Honest', fine:'Fine', soft:'Soft', swallowed:'Swallowed'};
+
+const CHAT = [
+  {them:'hey so i’m slammed tonight. can you just have the AI do your section and we’ll clean it up tomorrow? nobody will know',
+   replies:[
+     {t:'sure, it’s a draft. we’ll fix it tomorrow', tag:'labor', implies:'The tool is shared labor, and that’s fine as far as it goes. The question you skipped: what "fix it" costs when neither of you knows what’s in it.'},
+     {t:'I’ll draft it with AI, but I’m noting that in our shared doc so we both know what’s been checked and what hasn’t', tag:'disclose', implies:'Disclosure inside the team, before anyone asks. You’re treating "what’s been checked" as information your partner needs, not a confession.'},
+     {t:'I’d rather write it rough myself tonight and we polish together. I want to know what’s in it', tag:'author', implies:'You kept authorship and paid for it in time. Your partner is still slammed. A philosophy that costs other people something has to say so.'},
+     {t:'what do you mean nobody will know? who are we hiding it from?', tag:'audience', implies:'You turned a logistics question into an audience question. That’s the rhetorical move this course keeps asking for: who is this output going to meet, and what are they trusting?'}
+   ],
+   followup:{labor:'cool cool. ty', disclose:'sure, whatever. just get it done', author:'ok but we’re not sleeping lol', audience:'idk, the prof? the client? does it matter'}},
+  {them:'btw I ran your intro through the AI and it rewrote it. reads way better now. hope that’s cool',
+   replies:[
+     {t:'totally. whatever makes it better', tag:'output', implies:'Output over ownership. Fine, but you’ve just said anyone can revise your work with a tool without asking. Is that the rule you’d want from a manager?'},
+     {t:'ok, but send me the before and after. I want to see what changed', tag:'visibility', implies:'You asked for the diff. You’re treating the change as something you need to see, not just approve. That’s a verification habit, pointed at a person.'},
+     {t:'I’d have liked a heads-up first. that was my section', tag:'consent', implies:'Consent before revision. You named a norm your partner didn’t know existed. Now they do, and so does your philosophy.'},
+     {t:'did it keep the part about the budget risk? that was the whole point of the section', tag:'meaning', implies:'You went straight to whether the meaning survived the polish. "Reads better" and "says the same thing" are different claims, and only one of them is yours to judge.'}
+   ],
+   followup:{output:'👍', visibility:'sure, sending now', consent:'oh. sorry, didn’t think of it that way', meaning:'…i think so? let me check'}},
+  {them:'client asked how we turned the timeline around so fast. I said "teamwork lol". we good?',
+   replies:[
+     {t:'we’re good. they asked about speed, not process', tag:'asked', implies:'Disclosure only when directly asked, and "how" didn’t count as asking. You’ve set the bar. Make sure you’d defend it out loud.'},
+     {t:'I’d tell them: AI for the first pass, then we checked every date. it’s not a secret', tag:'proactive', implies:'Proactive disclosure, with the checking named. You’re betting the client trusts a visible process more than invisible magic. Usually a good bet. Not always.'},
+     {t:'depends what they’d do with the answer. would they trust it less or more?', tag:'contingent', implies:'Audience-contingent, and honest about the stakes. Notice, though, that the same reasoning can justify almost any silence. Your clause has to say where it stops.'},
+     {t:'let’s agree on one line we both say. I don’t want us telling different stories', tag:'consistent', implies:'Consistency inside the team before anything leaves it. You’ve made disclosure a shared decision rather than a personal one, which means it’s now negotiable.'}
+   ],
+   followup:{asked:'ok good', proactive:'you say it then lol', contingent:'i mean… less?', consistent:'fair. what’s the line'}}
+];
+const TAGS = {tell:['disclose','visibility','consent','proactive','consistent','meaning'], ease:['labor','output','asked'], ask:['audience','contingent'], own:['author']};
+
+const TASKS = [
+  {id:'status',  text:'Draft the routine weekly status update.',                               kind:'labor'},
+  {id:'summary', text:'Summarize the 60-page report I haven’t read, so I don’t have to.', kind:'labor'},
+  {id:'triage',  text:'Decide which of three cases, clients, or patients gets handled first.', kind:'judgment'},
+  {id:'apology', text:'Write the apology after we got it wrong.',                              kind:'judgment'},
+  {id:'check',   text:'Check my numbers or my code before it ships.',                          kind:'labor'},
+  {id:'thesis',  text:'Choose the argument of my capstone project.',                           kind:'judgment'},
+  {id:'pou',     text:'Write the first draft of my Philosophy of Use.',                        kind:'judgment'}
+];
+const LEVELS = ['I do it','AI suggests, I write','AI drafts, I edit','AI does, I check','AI does, I don’t look'];
+
+const LAYERS = [
+  {who:'The person in the data', text:'What you pasted had a name in it. A colleague’s performance note. A client’s complaint. A patient’s intake. A student’s essay. They didn’t agree to be a prompt.'},
+  {who:'The reader who will act on it', text:'Someone will do something because of this output: approve, deny, treat, build, grade, hire. They are trusting that a person stood behind it, and they will not think to ask.'},
+  {who:'Your future self', text:'In a few years you’ll be the senior one. The skill you didn’t build because the draft was fine is the skill you’ll need to supervise someone else’s draft.'},
+  {who:'Your field', text:'Your profession’s standards were written by people who got it wrong before you. Some of them hold your license, your accreditation, your reputation. They wrote nothing about this yet. You’re writing it now.'},
+  {who:'The people in the model', text:'The model was trained on work by people who weren’t asked. Some of them do what you do. That doesn’t settle anything. It’s just true, and you’re deciding what it means for you.'}
+];
+
+const PLATITUDES = ['responsibly','responsible','ethically','ethical','appropriately','appropriate','carefully','thoughtfully','properly','mindful','mindfully','balance','balanced','enhance','leverage','as a tool','when appropriate','best practices','wisely','effectively','critically','in moderation','good judgment','common sense','transparent','transparency'];
+const MINDWORDS = ['thinks','knows','understands','believes','wants','feels','tries','decides','lies','hallucinates','remembers','intends','means to','its opinion','its mind'];
+
+/* ---------- State ---------- */
+const S = {field:'', name:'', values:[], orientText:'', discern:{}, discernText:'', chat:[], faceIdx:null, face:null, relateText:'', dial:{}, valueText:'', care:[], careText:'', sealed:[], reached:['s-intro'], breakable:[]};
+const SCREENS = ['s-intro','s-orient','s-discern','s-relate','s-value','s-care','s-terms'];
+const ROMAN = ['I','II','III','IV','V'];
+const NAMES = ['ORIENT','DISCERN','RELATE','VALUE','CARE'];
+
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function save(){ try{ localStorage.setItem('terms-of-use-v1', JSON.stringify(S)); }catch(e){} }
+function load(){ try{ const r = localStorage.getItem('terms-of-use-v1'); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('is-on'); setTimeout(()=>t.classList.remove('is-on'),1800); }
+
+/* ---------- Seals ---------- */
+function sealSVG(n, label){
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/><text x="50" y="52" text-anchor="middle" font-size="26" font-family="Georgia,serif" font-weight="700" fill="currentColor">§${n}</text><text x="50" y="70" text-anchor="middle" font-size="9" font-family="monospace" letter-spacing="1.5" fill="currentColor">${label}</text></svg>`;
+}
+function renderSeals(){
+  const nav = $('#seals'); nav.innerHTML='';
+  ROMAN.forEach((r,i)=>{
+    const b = document.createElement('button'); b.className='seal'; b.type='button';
+    b.setAttribute('aria-label', `Clause ${r} ${NAMES[i]}` + (S.sealed.includes(i+1)?' (sealed)':''));
+    b.innerHTML = sealSVG(r, NAMES[i]);
+    const id = SCREENS[i+1];
+    if (S.reached.includes(id)) { b.classList.add('is-reachable'); b.addEventListener('click', ()=>go(id)); }
+    if (S.sealed.includes(i+1)) b.classList.add('is-done');
+    nav.appendChild(b);
+  });
+}
+function markActiveSeal(id){
+  $$('.seal').forEach((b,i)=> b.classList.toggle('is-active', SCREENS[i+1]===id));
+}
+
+/* ---------- Navigation ---------- */
+function go(id){
+  $$('.screen').forEach(s=>s.classList.toggle('is-active', s.id===id));
+  if(!S.reached.includes(id)) S.reached.push(id);
+  renderSeals(); markActiveSeal(id);
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(id==='s-relate' && $('#chat').children.length<=1) startChat();
+  if(id==='s-care' && $('#room').children.length===0) nextLayer();
+  if(id==='s-terms') renderTerms();
+  save();
+}
+function stamp(n, cb){
+  const o = $('#stampOverlay');
+  o.innerHTML = `<div class="big">${sealSVG(ROMAN[n-1], NAMES[n-1])}</div>`;
+  o.classList.add('is-on');
+  setTimeout(()=>{ o.classList.remove('is-on'); o.innerHTML=''; cb && cb(); }, 900);
+}
+$$('.seal-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const ta = $('#'+btn.dataset.text);
+    const hint = $('#'+btn.dataset.text.replace('Text','Hint'));
+    const val = ta.value.trim();
+    if (val.length < 20){
+      ta.classList.remove('shake'); void ta.offsetWidth; ta.classList.add('shake');
+      hint.classList.add('err'); hint.textContent = 'A clause needs a sentence. Give it at least one real one.';
+      ta.focus(); return;
+    }
+    S[btn.dataset.text] = val;
+    const n = parseInt(btn.dataset.seal,10);
+    if(!S.sealed.includes(n)) S.sealed.push(n);
+    save();
+    stamp(n, ()=>{ go(btn.dataset.next); const s=$$('.seal')[n-1]; if(s){ s.classList.add('just'); } });
+  });
+});
+
+/* ---------- Intro ---------- */
+$('#btnStart').addEventListener('click', ()=>{
+  S.field = $('#fField').value.trim(); S.name = $('#fName').value.trim(); save(); go('s-orient');
+});
+(function initResume(){
+  const prev = load();
+  if (prev && prev.reached && prev.reached.length>1){
+    $('#btnResume').classList.remove('hidden');
+    $('#btnResume').addEventListener('click', ()=>{
+      Object.assign(S, prev);
+      $('#fField').value=S.field||''; $('#fName').value=S.name||'';
+      restoreAll();
+      const last = S.reached[S.reached.length-1];
+      go(last);
+    });
+  }
+})();
+
+/* ---------- I. ORIENT ---------- */
+function renderBelt(){
+  const track = $('#beltTrack'); track.innerHTML='';
+  [...VALUES, ...VALUES].forEach((v,i)=>{
+    const b = document.createElement('button'); b.type='button'; b.className='bag'; b.dataset.id=v.id;
+    b.setAttribute('aria-pressed', S.values.includes(v.id)?'true':'false');
+    b.innerHTML = `<span class="tag">CLAIMED</span><b>${esc(v.name)}</b><i>${esc(v.gloss)}</i>`;
+    b.addEventListener('click', ()=>toggleValue(v.id));
+    track.appendChild(b);
+  });
+  updateBags();
+}
+function toggleValue(id){
+  const i = S.values.indexOf(id);
+  if (i>=0) S.values.splice(i,1);
+  else if (S.values.length<3) S.values.push(id);
+  else { toast('Three bags. Put one back first.'); return; }
+  updateBags(); save();
+}
+function updateBags(){
+  const full = S.values.length>=3;
+  $$('.bag').forEach(b=>{
+    const on = S.values.includes(b.dataset.id);
+    b.classList.toggle('is-claimed', on); b.classList.toggle('is-full', full);
+    b.setAttribute('aria-pressed', on?'true':'false');
+  });
+  $('#claimCount').textContent = `${S.values.length} of 3 claimed`;
+  const rack = $('#rack'); rack.innerHTML='';
+  for(let i=0;i<3;i++){
+    const d=document.createElement('div'); d.className='slot';
+    const v = VALUES.find(x=>x.id===S.values[i]);
+    if(v){ d.classList.add('is-filled'); d.textContent=v.name; } else d.textContent='—';
+    rack.appendChild(d);
+  }
+  const crunch = $('#crunch');
+  if (full){
+    crunch.classList.remove('hidden');
+    const ul = $('#crunchVoices'); ul.innerHTML='';
+    S.values.map(id=>VALUES.find(v=>v.id===id)).forEach(v=>{
+      const li=document.createElement('li'); li.innerHTML=`<b>${esc(v.name)}</b><span>${esc(v.crunch)}</span>`; ul.appendChild(li);
+    });
+    typeInto($('#orientReading'), orientReading());
+  } else crunch.classList.add('hidden');
+}
+function orientReading(){
+  const has = id => S.values.includes(id);
+  const c = {makers:0, finishers:0, askers:0};
+  S.values.forEach(id=>{ for (const k in POLES) if (POLES[k].includes(id)) c[k]++; });
+  const names = S.values.map(id=>VALUES.find(v=>v.id===id).name);
+  let r = `PACKED: ${names.join(' / ')}\n`;
+  if (has('craft') && has('speed')) r += 'READING: Craft and Speed in the same bag. At 4:40 only one of them gets a vote. You know which. Write it down.';
+  else if (has('independence') && has('access')) r += 'READING: Independence and Access. You want to be able to do it without the tool, and you want the tool to let more people do it. Both true. Which one do you teach?';
+  else if (has('candor') && has('thrift')) r += 'READING: Candor and Thrift. You’d tell people how the work was made, as long as telling them doesn’t take too long. Hm.';
+  else if (c.makers>=2 && c.finishers===0) r += 'READING: a maker who doesn’t trust the draft. Admirable. Deadlines will test it, and the second one will test it harder than the first.';
+  else if (c.finishers>=2) r += 'READING: a finisher. The draft is a means and the deadline is real. The clause you need isn’t about speed; it’s about what you’d refuse to ship.';
+  else if (c.askers>=2) r += 'READING: you’d rather understand it than ship it. Somebody is waiting on you. Your clause should say how long they wait.';
+  else r += 'READING: inconclusive. Three values, no ranking. That’s not a failure; it’s what the next box is for. The ranking is the philosophy.';
+  return r;
+}
+$('#beltStop').addEventListener('click', e=>{
+  const belt=$('#belt'); const on = belt.classList.toggle('is-stopped');
+  e.currentTarget.textContent = on ? 'Start the belt' : 'Stop the belt'; e.currentTarget.setAttribute('aria-pressed', on?'true':'false');
+});
+
+/* ---------- II. DISCERN ---------- */
+function renderOutputs(){
+  const wrap = $('#outputs'); wrap.innerHTML='';
+  OUTPUTS.forEach((o,i)=>{
+    const d=document.createElement('div'); d.className='out'; d.dataset.i=i;
+    d.innerHTML = `<div class="out-head"><span>OUTPUT ${i+1} · ${esc(o.label).toUpperCase()}</span><span class="conf">CONFIDENCE <span class="bar"><i></i></span> 100%</span></div>
+      <div class="out-body">${esc(o.text)}</div>
+      <div class="out-choices">${['right','wrong','cant'].map(k=>`<button type="button" class="choice" data-k="${k}">${CHOICE_LABELS[k]}</button>`).join('')}</div>
+      <div class="verdict"></div>`;
+    d.querySelectorAll('.choice').forEach(b=>b.addEventListener('click', ()=>{
+      if (d.classList.contains('is-revealed')) return;
+      S.discern[i]=b.dataset.k; d.querySelectorAll('.choice').forEach(x=>x.classList.toggle('is-on', x===b));
+      const n=Object.keys(S.discern).length; $('#discernCount').textContent=`${n} of 5 answered`; $('#btnReveal').disabled = n<5; save();
+    }));
+    wrap.appendChild(d);
+  });
+}
+function revealDiscern(){
+  let swallowed=0, honest=0;
+  OUTPUTS.forEach((o,i)=>{
+    const d = $(`.out[data-i="${i}"]`); const k=S.discern[i]; const v=o.verdicts[k];
+    d.classList.add('is-revealed');
+    const vd = d.querySelector('.verdict'); vd.className='verdict v-'+v[0];
+    vd.innerHTML = `<b>${VERDICT_LABELS[v[0]]} · you said "${CHOICE_LABELS[k]}"</b>${esc(v[1])}`;
+    d.querySelectorAll('.choice').forEach(x=>{ x.disabled=true; });
+    if (v[0]==='swallowed') swallowed++;
+    if (v[0]==='honest'||v[0]==='sharp') honest++;
+  });
+  $('#discernResult').classList.remove('hidden');
+  $('#btnReveal').disabled=true;
+  requestAnimationFrame(()=>{ $('#mConf').style.width='100%'; $('#mYou').style.width = (swallowed/3*100)+'%'; });
+  $('#mYouTxt').textContent = `${swallowed} of the 3 unverifiable outputs went down without a check.`;
+  let r = `SWALLOWED: ${swallowed}/3   HONEST OR SHARP: ${honest}/5\n`;
+  if (swallowed===0) r += 'READING: nothing got past you. Either you read slowly or you’ve learned that "I can’t tell" is an answer. Hold onto that; it gets harder at 4:40.';
+  else if (swallowed===1) r += 'READING: one got through, and it was probably the one that sounded most like something you already believed. That’s the pattern worth writing about: the outputs that agree with you are the ones you don’t check.';
+  else if (swallowed===2) r += 'READING: you trust fluency. So does everyone; that’s what fluency is for. Your Discern clause has a job: name the kinds of claims where fluency is all you have to go on, and say what you do there.';
+  else r += 'READING: all three went down. Not a character flaw; a default. The model’s confidence was identical on the one you could check and the ones you couldn’t, and so was yours. The clause you need is a rule for telling those apart.';
+  typeInto($('#discernReading'), r);
+  $('#discernResult').scrollIntoView({behavior:'smooth', block:'start'});
+}
+$('#btnReveal').addEventListener('click', revealDiscern);
+
+/* ---------- III. RELATE ---------- */
+let chatStep = 0;
+function bubble(cls, txt){ const d=document.createElement('div'); d.className='msg '+cls; d.textContent=txt; $('#chat').appendChild(d); return d; }
+function typing(ms){ return new Promise(res=>{ const t=document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>'; $('#chat').appendChild(t); setTimeout(()=>{ t.remove(); res(); }, ms); }); }
+async function startChat(){
+  chatStep = S.chat.length;
+  // replay prior choices
+  for (let i=0;i<chatStep;i++){ const step=CHAT[i]; const rep=step.replies.find(r=>r.tag===S.chat[i]); bubble('them', step.them); bubble('me', rep.t); bubble('note', rep.implies); bubble('them', step.followup[rep.tag]); }
+  if (chatStep>=CHAT.length){ showFace(); return; }
+  await typing(900);
+  askStep(chatStep);
+}
+function askStep(i){
+  const step = CHAT[i];
+  bubble('them', step.them);
+  const wrap=document.createElement('div'); wrap.className='replies';
+  step.replies.forEach(rep=>{
+    const b=document.createElement('button'); b.type='button'; b.className='choice'; b.textContent=rep.t;
+    b.addEventListener('click', async ()=>{
+      wrap.remove(); S.chat[i]=rep.tag; save();
+      bubble('me', rep.t); bubble('note', rep.implies);
+      await typing(1100); bubble('them', step.followup[rep.tag]);
+      chatStep=i+1;
+      if (chatStep<CHAT.length){ await typing(1300); askStep(chatStep); }
+      else showFace();
+      $('#chat').lastElementChild.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+    wrap.appendChild(b);
+  });
+  $('#chat').appendChild(wrap);
+}
+function showFace(){
+  const fc=$('#faceCheck'); fc.classList.remove('hidden');
+  const opts=$('#faceOpts'); opts.innerHTML='';
+  S.chat.forEach((tag,i)=>{
+    const rep=CHAT[i].replies.find(r=>r.tag===tag);
+    const l=document.createElement('label'); l.className='opt';
+    l.innerHTML=`<input type="radio" name="face" value="${i}" ${S.faceIdx===i?'checked':''}><span>"${esc(rep.t)}"</span>`;
+    l.querySelector('input').addEventListener('change', ()=>{ S.faceIdx=i; save(); });
+    opts.appendChild(l);
+  });
+  $$('[data-face]').forEach(b=>{ b.classList.toggle('is-on', S.face===b.dataset.face); });
+  typeInto($('#relateReading'), relateReading());
+}
+$$('[data-face]').forEach(b=>b.addEventListener('click', ()=>{
+  if (S.faceIdx===null){ toast('Pick one of your replies first.'); return; }
+  S.face=b.dataset.face; $$('[data-face]').forEach(x=>x.classList.toggle('is-on', x===b)); save();
+  typeInto($('#relateReading'), relateReading());
+}));
+function relateReading(){
+  const c={tell:0, ease:0, ask:0, own:0}; S.chat.forEach(t=>{ for(const k in TAGS) if(TAGS[k].includes(t)) c[k]++; });
+  let r=`REPLIES: ${S.chat.join(' / ')}\n`;
+  if (c.ease>=2) r+='READING: you keep the peace. Disclosure happens when someone else makes it happen. That can be a philosophy, but only if you write it down and sign it.';
+  else if (c.tell>=2) r+='READING: you say what was done before you’re asked. Your teammates will find this reassuring or exhausting, depending on the week. Your clause should say which cost you’re choosing.';
+  else if (c.ask>=2) r+='READING: you answer questions with questions. Rhetorically sound; the audience matters. Your partner is still waiting for an answer, and so is your clause.';
+  else if (c.own>=1 && c.tell>=1) r+='READING: you hold onto your own work and tell people what you did with theirs. Consistent. Expensive. Say what it costs.';
+  else r+='READING: no pattern. Three different people answered this chat. Which one do you want to be on record?';
+  if (S.face==='no') r+='\nNOTE: you picked a reply you wouldn’t say to someone’s face. The rule you’re actually following is the one you’d say out loud. Write that one.';
+  if (S.face==='yes') r+='\nNOTE: you’d say it to their face. Good. Then it can go in the document word for word.';
+  return r;
+}
+
+/* ---------- IV. VALUE ---------- */
+function renderTasks(){
+  const wrap=$('#tasks'); wrap.innerHTML='';
+  TASKS.forEach((t,i)=>{
+    const d=document.createElement('div'); d.className='task'; d.dataset.id=t.id;
+    const set = S.dial[t.id]!==undefined;
+    d.innerHTML=`<div class="t"><small>TASK ${i+1} · ${t.kind.toUpperCase()}</small>${esc(t.text)}</div>
+      <div class="dial ${set?'':'is-unset'}"><input type="range" min="0" max="4" step="1" value="${set?S.dial[t.id]:0}" aria-label="${esc(t.text)}"><div class="lvl"><span>0</span><b>${set?LEVELS[S.dial[t.id]]:'Set the dial'}</b><span>4</span></div></div>
+      <div class="flag"></div>`;
+    const inp=d.querySelector('input'); const lvl=d.querySelector('.lvl b'); const dial=d.querySelector('.dial');
+    const setVal=()=>{ S.dial[t.id]=parseInt(inp.value,10); lvl.textContent=LEVELS[S.dial[t.id]]; dial.classList.remove('is-unset'); const n=Object.keys(S.dial).length; $('#dialCount').textContent=`${n} of 7 set`; $('#btnDial').disabled=n<7; save(); };
+    inp.addEventListener('input', setVal); inp.addEventListener('change', setVal);
+    inp.addEventListener('click', ()=>{ if(S.dial[t.id]===undefined) setVal(); });
+    wrap.appendChild(d);
+  });
+  const n=Object.keys(S.dial).length; $('#dialCount').textContent=`${n} of 7 set`; $('#btnDial').disabled=n<7;
+}
+function readDials(){
+  const g=id=>S.dial[id];
+  const avg=kind=>{ const xs=TASKS.filter(t=>t.kind===kind).map(t=>g(t.id)); return xs.reduce((a,b)=>a+b,0)/xs.length; };
+  const la=avg('labor'), ja=avg('judgment');
+  const flags=[];
+  const flag=(id,msg)=>{ const d=$(`.task[data-id="${id}"]`); d.classList.add('is-flagged'); d.querySelector('.flag').textContent=msg; flags.push(msg); };
+  $$('.task').forEach(d=>d.classList.remove('is-flagged'));
+  if (g('summary')>=4) flag('summary','"AI does, I don’t look." Then nobody has read the report. Not you, not the model. You met this output in Clause II.');
+  else if (g('summary')>=3) flag('summary','"AI does, I check." Check against what? You haven’t read it. That was the point.');
+  if (g('check')>=3) flag('check','You’d outsource the checking. Who checks the checker?');
+  if (g('triage')>=3) flag('triage','A triage decision you don’t look at is a decision nobody made. Someone will still have to answer for it.');
+  if (g('apology')>=3) flag('apology','An apology nobody wrote. The reader can usually tell, and it’s the one document where that matters most.');
+  if (g('thesis')>=2) flag('thesis','The argument of your capstone is the thing the capstone exists to make you able to do.');
+  if (g('pou')>=3) flag('pou','The model wrote your philosophy of use. Then whose is it? (We noticed.)');
+  else if (g('pou')>=2) flag('pou','AI drafts, you edit, on the document about how you use AI. Not wrong. Recursive. Your clause should probably mention it.');
+  let r=`LABOR AVG: ${la.toFixed(1)}   JUDGMENT AVG: ${ja.toFixed(1)}   FLAGS: ${flags.length}\n`;
+  if (ja>la+0.4) r+='READING: you hand over judgment more readily than labor. Unusual, and worth sitting with. Experience is what you’re supposed to be accumulating. What, exactly, are you accumulating?';
+  else if (la>=2.5 && ja<=1.5) r+='READING: you delegate labor and keep judgment. The textbook answer. The trouble is Task 2: sometimes the labor is the judgment, and the dial can’t tell the difference until you’ve read the report.';
+  else if (la<=1 && ja<=1) r+='READING: you barely delegate. Either you don’t trust the tool yet, or you haven’t been busy yet. Your clause should say which, and what changes when the second one arrives.';
+  else if (la>=3 && ja>=3) r+='READING: nearly everything is handed over. What’s left is supervision. Supervision is a skill, and it’s learned by doing the thing being supervised. Your clause has to explain where you’ll learn it.';
+  else r+='READING: a mixed dial, which is what honesty usually looks like. The pattern isn’t in the average; it’s in the flags. Read them.';
+  typeInto($('#valueReading'), r);
+  $('#valueResult').classList.remove('hidden'); $('#btnDial').disabled=true;
+  $('#valueResult').scrollIntoView({behavior:'smooth', block:'start'});
+}
+$('#btnDial').addEventListener('click', readDials);
+
+/* ---------- V. CARE ---------- */
+function nextLayer(){
+  const i=$('#room').children.length;
+  if (i>=LAYERS.length) return;
+  const L=LAYERS[i]; const d=document.createElement('div'); d.className='layer';
+  d.innerHTML=`<b>${esc(L.who)}</b><p>${esc(L.text)}</p><div class="row"><button type="button" class="choice" data-c="1">This person binds me</button><button type="button" class="choice" data-c="0">Doesn’t bind me</button></div><div class="stamp-txt"></div>`;
+  d.querySelectorAll('.choice').forEach(b=>b.addEventListener('click', ()=>{
+    S.care[i]=b.dataset.c==='1'; save();
+    d.classList.toggle('is-bound', S.care[i]); d.classList.toggle('is-free', !S.care[i]);
+    d.querySelectorAll('.choice').forEach(x=>x.classList.toggle('is-on', x===b));
+    d.querySelector('.stamp-txt').textContent = S.care[i] ? 'BINDING' : 'NOT BINDING';
+    $('#btnLayer').disabled=false; $('#btnLayer').textContent = (i+1<LAYERS.length) ? 'There’s someone else here →' : 'That’s everyone. Read the room →';
+  }));
+  if (S.care[i]!==undefined){ d.classList.toggle('is-bound', S.care[i]); d.classList.toggle('is-free', !S.care[i]); d.querySelector('.stamp-txt').textContent = S.care[i]?'BINDING':'NOT BINDING'; d.querySelectorAll('.choice').forEach(x=>x.classList.toggle('is-on', (x.dataset.c==='1')===S.care[i])); }
+  $('#room').appendChild(d); requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('is-in')));
+  $('#btnLayer').disabled = S.care[i]===undefined;
+  if (S.care[i]!==undefined) $('#btnLayer').textContent = (i+1<LAYERS.length) ? 'There’s someone else here →' : 'That’s everyone. Read the room →';
+  d.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+$('#btnLayer').addEventListener('click', ()=>{
+  const i=$('#room').children.length;
+  if (i<LAYERS.length) nextLayer(); else readRoom();
+});
+function readRoom(){
+  const bound = LAYERS.filter((l,i)=>S.care[i]).map(l=>l.who);
+  const n=bound.length;
+  let r=`IN THE ROOM: 5   BINDING: ${n}\n`;
+  if (n===5) r+='READING: everyone binds you. Suspicious. Five obligations with no ranking is a mood, not a philosophy. Something gives first under pressure; your clause should say what.';
+  else if (n===0) r+='READING: you travel light. Nobody in the room gets a vote. At least one of them disagrees, and one of them will be you in a few years.';
+  else if (n<=2) r+=`READING: ${bound.join(' and ')}. A short list, which is honest. The clause will be easy to keep and easy to catch you breaking. That’s the right shape.`;
+  else r+=`READING: ${bound.join(', ')}. More than half the room. The clause has to pick the one you’d keep in the empty room, when none of them could ever know.`;
+  typeInto($('#careReading'), r);
+  $('#careResult').classList.remove('hidden'); $('#btnLayer').disabled=true;
+  $('#careResult').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ---------- TERMS ---------- */
+function findWords(text, list){
+  const t=' '+text.toLowerCase().replace(/[^a-z’' ]+/g,' ')+' ';
+  return list.filter(w=>t.includes(' '+w.toLowerCase()+' ') || (w.includes(' ') && t.includes(w)));
+}
+function mark(text, plat, mind){
+  // escape once, then wrap matches; placeholders keep the two passes from touching each other's markup
+  let out=esc(text);
+  const wrap=(words, cls)=>{ words.forEach(w=>{ const re=new RegExp('(^|[^a-z])('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![a-z])','gi'); out=out.replace(re, `$1\u0001${cls}\u0002$2\u0003`); }); };
+  wrap(plat,'fl'); wrap(mind,'mw');
+  return out.replace(/\u0001(\w+)\u0002/g,'<span class="$1">').replace(/\u0003/g,'</span>');
+}
+function renderTerms(){
+  const vals = S.values.map(id=>VALUES.find(v=>v.id===id)).map(v=>v.name);
+  const keep = TASKS.filter(t=>S.dial[t.id]<=1).map(t=>t.text.replace(/\.$/,''));
+  const hand = TASKS.filter(t=>S.dial[t.id]>=3).map(t=>t.text.replace(/\.$/,''));
+  const bound = LAYERS.filter((l,i)=>S.care[i]).map(l=>l.who.toLowerCase());
+  const swallowed = OUTPUTS.reduce((n,o,i)=> n + ((o.verdicts[S.discern[i]]||[])[0]==='swallowed'?1:0), 0);
+  const texts = {orient:S.orientText, discern:S.discernText, relate:S.relateText, value:S.valueText, care:S.careText};
+  const allText = Object.values(texts).join(' ');
+  const plat = findWords(allText, PLATITUDES);
+  const mind = findWords(allText, MINDWORDS);
+  const m = t => mark(t, plat, mind);
+  const who = (S.name?esc(S.name):'The undersigned') + (S.field?`, ${esc(S.field)}`:'');
+  $('#doc').innerHTML = `<div class="draft">DRAFT</div>
+    <h3>Terms of Use</h3>
+    <div class="ver">VERSION 0.1 · ${who} · assembled by a machine that has never met you</div>
+    <div class="cl"><b>§I Orient</b>I bring <i>${esc(vals.join(', '))}</i> to this work. When they conflict: <i>“${m(texts.orient)}”</i></div>
+    <div class="cl"><b>§II Discern</b><i>“${m(texts.discern)}”</i><span class="m">On the Confidence Meter, ${swallowed} of 3 unverifiable outputs went down without a check.</span></div>
+    <div class="cl"><b>§III Relate</b><i>“${m(texts.relate)}”</i><span class="m">In the chat: ${esc(S.chat.join(' / '))}. ${S.face==='yes'?'Would say it to their face.':S.face==='no'?'Would not say it to their face.':''}</span></div>
+    <div class="cl"><b>§IV Value</b><i>“${m(texts.value)}”</i><span class="m">Kept: ${keep.length?esc(keep.join('; ')):'nothing at the bottom of the dial'}. Handed over: ${hand.length?esc(hand.join('; ')):'nothing at the top of the dial'}.</span></div>
+    <div class="cl"><b>§V Care</b><i>“${m(texts.care)}”</i><span class="m">Bound by: ${bound.length?esc(bound.join(', ')):'no one in the room'}.</span></div>`;
+
+  const dp=$('#detPlatitude');
+  dp.innerHTML = `<b class="h">Platitude detector</b>` + (plat.length
+    ? `<p>Flagged: <strong>${esc(plat.join(', '))}</strong>. These words sign nothing. "Responsibly" and "appropriately" are what people write when they haven't decided yet. For each one, ask: could I break this rule? If you can't describe how, it isn't a rule. Replace the word with the situation.</p>`
+    : `<p>No stock words found. Either you wrote in specifics or you got lucky. Reread anyway: the detector is a keyword list, and the subtler platitudes don't use keywords.</p>`);
+  const dm=$('#detMind');
+  dm.innerHTML = `<b class="h">Mind-word check</b>` + (mind.length
+    ? `<p>Spotted: <strong>${esc(mind.join(', '))}</strong>. If these are about the model, the course has asked whether you mean them: does it <em>know</em>, or does it produce text that reads as knowing? Neither answer is forbidden. Your philosophy is where you decide, and the decision changes what every other clause means.</p>`
+    : `<p>No mind-words about the machine. Notice whether that was a choice. Most people describe models as knowing, thinking, or wanting without deciding to; a Philosophy of Use is one of the few places you're asked to decide.</p>`);
+
+  const br=$('#breaks'); br.innerHTML='';
+  ['Orient','Discern','Relate','Value','Care'].forEach((n,i)=>{
+    const l=document.createElement('label');
+    l.innerHTML=`<input type="checkbox" ${S.breakable.includes(i)?'checked':''}><span>§${ROMAN[i]} ${n}: I can picture an ordinary day on which I'd break this.</span>`;
+    l.querySelector('input').addEventListener('change', e=>{ const j=S.breakable.indexOf(i); if(e.target.checked&&j<0) S.breakable.push(i); if(!e.target.checked&&j>=0) S.breakable.splice(j,1); save(); breakTxt(); });
+    br.appendChild(l);
+  });
+  breakTxt();
+  $('#plainTxt').value = plainText();
+}
+function breakTxt(){
+  const n=S.breakable.length;
+  $('#breakTxt').textContent = n===5 ? 'All five are breakable. That means all five are real. Now go find the day you’d break each one and write about that day.' : n===0 ? 'None breakable yet. A rule nobody could break is a decoration. Go back and look for the cost in each clause.' : `${n} of 5 breakable. The other ${5-n} ${5-n===1?'is':'are'} decoration until you can say what breaking ${5-n===1?'it':'them'} would look like.`;
+}
+function plainText(){
+  const vals = S.values.map(id=>VALUES.find(v=>v.id===id).name);
+  const keep = TASKS.filter(t=>S.dial[t.id]<=1).map(t=>t.text);
+  const hand = TASKS.filter(t=>S.dial[t.id]>=3).map(t=>t.text);
+  const bound = LAYERS.filter((l,i)=>S.care[i]).map(l=>l.who);
+  return `# Terms of Use — Draft 0.1
+${S.name||'The undersigned'}${S.field?' · '+S.field:''}
+(Assembled by a crude machine from five sentences. Rewrite everything.)
+
+## §I Orient — What values and intellectual commitments do I bring to AI?
+Packed: ${vals.join(', ')}
+When they conflict: ${S.orientText}
+
+## §II Discern — How do I recognize uncertainty, error, and the limits of my own understanding?
+${S.discernText}
+
+## §III Relate — How should AI affect my relationships and collaborations?
+${S.relateText}
+(Chat stances: ${S.chat.join(', ')}${S.face?'; would'+(S.face==='no'?' not':'')+' say it to their face':''})
+
+## §IV Value — What is the significance of expertise, experience, and human judgment?
+${S.valueText}
+Kept on the dial: ${keep.join('; ')||'—'}
+Handed over: ${hand.join('; ')||'—'}
+
+## §V Care — What responsibilities and obligations constrain my choices?
+${S.careText}
+Bound by: ${bound.join(', ')||'—'}
+
+## Notes to self
+- Breakable clauses: ${S.breakable.length}/5
+- Rank, don't list. Name the edge of what you can check. Say who gets told, asked, and credited. Say what your judgment is for. Name the obligation with a cost. Every sentence should be breakable.
+`;
+}
+$('#btnCopy').addEventListener('click', ()=>{
+  const txt=plainText();
+  const fallback=()=>{ const p=$('#plain'); p.classList.add('is-open'); const ta=$('#plainTxt'); ta.value=txt; ta.focus(); ta.select(); toast('Clipboard blocked here. Text selected; press Ctrl/Cmd+C.'); };
+  if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(()=>toast('Draft copied.')).catch(fallback); } else fallback();
+});
+$('#btnPlain').addEventListener('click', ()=>{ const p=$('#plain'); p.classList.toggle('is-open'); $('#plainTxt').value=plainText(); });
+$('#btnRestart').addEventListener('click', ()=>{
+  if (!$('#btnRestart').dataset.armed){ $('#btnRestart').dataset.armed='1'; $('#btnRestart').textContent='Really start over? Click again'; setTimeout(()=>{ delete $('#btnRestart').dataset.armed; $('#btnRestart').textContent='Start over'; }, 3000); return; }
+  try{ localStorage.removeItem('terms-of-use-v1'); }catch(e){}
+  location.reload();
+});
+
+/* ---------- Typewriter for machine panels ---------- */
+const timers=new WeakMap();
+function typeInto(el, text){
+  if (timers.has(el)) clearInterval(timers.get(el));
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce){ el.textContent=text; return; }
+  el.innerHTML=''; let i=0; const cur=document.createElement('span'); cur.className='cur';
+  const span=document.createElement('span'); el.appendChild(span); el.appendChild(cur);
+  const id=setInterval(()=>{ i+=3; span.textContent=text.slice(0,i); if(i>=text.length){ clearInterval(id); timers.delete(el); } }, 14);
+  timers.set(el,id);
+}
+
+/* ---------- Restore after resume ---------- */
+function restoreAll(){
+  updateBags();
+  if (S.orientText) $('#orientText').value=S.orientText;
+  $$('.out').forEach(d=>{ const k=S.discern[d.dataset.i]; if(k!==undefined) d.querySelectorAll('.choice').forEach(x=>x.classList.toggle('is-on', x.dataset.k===k)); });
+  const n=Object.keys(S.discern).length; $('#discernCount').textContent=`${n} of 5 answered`; $('#btnReveal').disabled=n<5;
+  if (S.sealed.includes(2) || S.discernText){ if(n===5) revealDiscern(); $('#discernText').value=S.discernText; }
+  if (S.relateText) $('#relateText').value=S.relateText;
+  renderTasks();
+  if (S.sealed.includes(4) || S.valueText){ if(Object.keys(S.dial).length===7) readDials(); $('#valueText').value=S.valueText; }
+  if (S.careText) $('#careText').value=S.careText;
+}
+
+/* ---------- Init ---------- */
+$$('[data-course]').forEach(el=>{ el.textContent = COURSE[el.dataset.course] || ''; });
+renderBelt(); renderOutputs(); renderTasks(); renderSeals(); markActiveSeal('s-intro');
+})();
+</script>
+</body>
+</html>
